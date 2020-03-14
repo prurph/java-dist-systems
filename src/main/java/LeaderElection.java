@@ -3,7 +3,6 @@ import org.apache.zookeeper.*;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class LeaderElection implements Watcher {
   private static final String ZOOKEEPER_ADDRESS = "localhost:2181";
@@ -13,6 +12,10 @@ public class LeaderElection implements Watcher {
   private String zoomoji;
   private ZooKeeper zooKeeper;
   private String currentZnodeName;
+
+  public LeaderElection() {
+    this.zoomoji = PscottUtils.zoomoji();
+  }
 
   public static void main(String[] args) throws InterruptedException, IOException, KeeperException {
     LeaderElection leaderElection = new LeaderElection();
@@ -24,10 +27,6 @@ public class LeaderElection implements Watcher {
     leaderElection.close();
 
     System.out.println("👋 Disconnected from ZooKeeper");
-  }
-
-  public LeaderElection() {
-    this.zoomoji = getZoomoji();
   }
 
   public void volunteerAsLeader() throws InterruptedException, KeeperException {
@@ -81,10 +80,5 @@ public class LeaderElection implements Watcher {
           }
         }
     }
-  }
-
-  private String getZoomoji() {
-    String[] zoomojis = {"🦁", "🐯", "🐵", "🐨", "🐻", "🦥", "🦜"};
-    return zoomojis[ThreadLocalRandom.current().nextInt(zoomojis.length)];
   }
 }
