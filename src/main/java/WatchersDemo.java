@@ -89,8 +89,7 @@ public class WatchersDemo implements Watcher {
 
     try {
       watchZnode();
-    } catch (KeeperException ignored) {
-    } catch (InterruptedException ignored) {
+    } catch (KeeperException | InterruptedException ignored) {
     }
   }
 }
